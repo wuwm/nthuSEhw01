@@ -19,6 +19,7 @@ public class GradeSystems {
 	public GradeSystems () 
 	{
 		aList=new LinkedList<Grades>();
+		//这里从文件添加！！！
 	}
 	public void showGrade(String ID)
 	{
