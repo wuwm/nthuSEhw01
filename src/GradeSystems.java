@@ -4,16 +4,18 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 
 public class GradeSystems {
 	private LinkedList<Grades> aList;
 	private float weight[]={(float) 0.1,(float) 0.1,(float) 0.1,(float) 0.3,(float) 0.4};
+	Scanner s=new Scanner(System.in);
 	public boolean containsID(String ID)
 	{
 		for(Grades g:aList)
 		{
-			if(g.getID()==ID)
+			if(g.getID().compareTo(ID)==0)
 			{
 				return true;
 			}
@@ -53,7 +55,7 @@ public class GradeSystems {
 	{
 		for(Grades g:aList)
 		{
-			if(g.getID()==ID)
+			if(g.getID().compareTo(ID)==0)
 			{
 				System.out.println(g.getName()+"成绩"+"：");
 				System.out.println("lab1:     "+g.getLab1());
@@ -66,16 +68,24 @@ public class GradeSystems {
 	}
 	public void showRank(String ID)
 	{
-		
+		int rank=1;
 		for(Grades g:aList)
 		{
-			if(g.getID()==ID)
+			if(g.getID().compareTo(ID)==0)
 			{
-				System.out.println(g.getName()+"排名第"+aList.indexOf(g));
+				for(Grades gg:aList)
+				{
+					if(gg.getTotalGrade()>g.getTotalGrade())
+					{
+						rank++;
+					}
+				}
+				System.out.println(g.getName()+"排名第"+rank);
+				break;
 			}
 		}
 	}
-	public void updateWeights ()
+	private void showOldWeights()
 	{
 		System.out.println("舊配分");
 		System.out.println("lab1:     "+this.weight[0]);
@@ -83,14 +93,45 @@ public class GradeSystems {
 		System.out.println("lab3:     "+this.weight[2]);
 		System.out.println("mid-Term:     "+this.weight[3]);
 		System.out.println("final Term:     "+this.weight[4]);
+	}
+	private void getNewWeights()
+	{
 		System.out.println("輸入新配分");
-		//这里需要做修改！！！！！！没写输入的东西！！！！！
+		System.out.print("lab1:     ");
+		weight[0]=Float.parseFloat(s.nextLine());
+		System.out.print("lab2:     ");
+		weight[1]=Float.parseFloat(s.nextLine());
+		System.out.print("lab3:     ");
+		weight[2]=Float.parseFloat(s.nextLine());
+		System.out.print("mid-Term:     ");
+		weight[3]=Float.parseFloat(s.nextLine());
+		System.out.print("final Term:     ");
+		weight[4]=Float.parseFloat(s.nextLine());
+	}
+	private void verifyNewWeights()
+	{
 		System.out.println("請確認新配分");
 		System.out.println("lab1:     "+this.weight[0]);
 		System.out.println("lab2:     "+this.weight[1]);
 		System.out.println("lab3:     "+this.weight[2]);
 		System.out.println("mid-Term:     "+this.weight[3]);
 		System.out.println("final Term:     "+this.weight[4]);
+	}
+
+	public void updateWeights ()
+	{
+		char op;
+		showOldWeights();
+		do{
+			getNewWeights();
+			verifyNewWeights();
+			System.out.println("以上正確嗎? Y (Yes) 或 N (No)");
+			op=s.nextLine().charAt(0);
+		}while(op!='Y');
+		for(Grades g:aList)
+		{
+			g.calculateTotalGrade(weight);
+		}
 	}
 
 }
