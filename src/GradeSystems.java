@@ -1,3 +1,7 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -18,8 +22,32 @@ public class GradeSystems {
 	}
 	public GradeSystems () 
 	{
+		String info[];
 		aList=new LinkedList<Grades>();
-		//这里从文件添加！！！
+		File file = new File("gradeinput.txt");
+        BufferedReader reader = null;
+        try {
+            System.out.println("以行为单位读取文件内容，一次读一整行：");
+            reader = new BufferedReader(new FileReader(file));
+            String tempString = null;
+            while ((tempString = reader.readLine()) != null) {
+            	info=tempString.split(" ");
+            	Grades g=new Grades(info[0],info[1],info[2],info[3],info[4],info[5],info[6]);
+            	g.calculateTotalGrade(this.weight);
+            	aList.push(g);
+            }
+            reader.close();
+            Collections.sort(aList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e1) {
+                }
+            }
+        }
 	}
 	public void showGrade(String ID)
 	{
@@ -38,7 +66,7 @@ public class GradeSystems {
 	}
 	public void showRank(String ID)
 	{
-		Collections.sort(aList);
+		
 		for(Grades g:aList)
 		{
 			if(g.getID()==ID)

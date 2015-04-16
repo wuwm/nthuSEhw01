@@ -10,15 +10,15 @@ public class Grades implements Comparable<Grades>{
 	private int midTerm;
 	private int finalExam;
 	private int totalGrade;
-	Grades(String ID,String Name,int lab1,int lab2,int lab3,int midTerm,int finalExam)
+	Grades(String ID,String Name,String lab1,String lab2,String lab3,String midTerm,String finalExam)
 	{
 		this.ID=ID;
 		this.Name=Name;
-		this.lab1=lab1;
-		this.lab2=lab2;
-		this.lab3=lab3;
-		this.midTerm=midTerm;
-		this.finalExam=finalExam;
+		this.lab1=Integer.parseInt(lab1);;
+		this.lab2=Integer.parseInt(lab2);
+		this.lab3=Integer.parseInt(lab3);
+		this.midTerm=Integer.parseInt(midTerm);
+		this.finalExam=Integer.parseInt(finalExam);
 		  
 	}
 	public String getID() {

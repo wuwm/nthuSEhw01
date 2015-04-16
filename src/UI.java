@@ -2,14 +2,19 @@ import java.util.Scanner;
 
 
 public class UI {
-	GradeSystems gradesystem;
+	GradeSystems gradesystem=new GradeSystems();
 	Scanner s=new Scanner(System.in);
-	public void UI(){
-				
+	UI(){
+		System.out.println("輸入ID或 Q (結束使用)？");
+		String stuID=s.nextLine();
+		if(stuID=="Q"){
+			//exit
+		}
+			
+		this.checkID(stuID);
 	}
 	public void checkID(String ID){
-		System.out.println("輸入ID或 Q (結束使用)？");
-		//这里等待用户输入
+
 		if(gradesystem.containsID(ID)){
 			this.promptCommand();
 			char op=s.next().charAt(0);
